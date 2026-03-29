@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "provider": {
+      "title": "Provider",
+      "description": "A service provider on CheapPlug Kenya",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Owner name" },
+        "businessName": { "type": "string", "description": "Business name" },
+        "phone": { "type": "string", "description": "Contact phone" },
+        "whatsapp": { "type": "string", "description": "WhatsApp number" },
+        "categoryId": { "type": "string", "description": "Category ID" },
+        "county": { "type": "string", "description": "Kenyan County" },
+        "town": { "type": "string", "description": "Town or area" },
+        "description": { "type": "string", "description": "Service description" },
+        "priceMin": { "type": "integer", "description": "Minimum price in KES" },
+        "priceMax": { "type": "integer", "description": "Maximum price in KES" },
+        "priceUnit": { "type": "string", "description": "Price unit (e.g., per job)" },
+        "photos": { "type": "array", "items": { "type": "string" }, "description": "Photo URLs" },
+        "verified": { "type": "boolean", "description": "Phone verified" },
+        "certified": { "type": "boolean", "description": "CheapPlug Certified" },
+        "ratingAvg": { "type": "number", "description": "Average rating" },
+        "reviewCount": { "type": "integer", "description": "Number of reviews" },
+        "isActive": { "type": "boolean", "description": "Is listing active" },
+        "plan": { "type": "string", "enum": ["free", "pro", "business"], "description": "Subscription plan" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "businessName", "phone", "categoryId", "county", "town", "priceMin", "priceMax", "priceUnit"]
+    },
+    "category": {
+      "title": "Category",
+      "description": "Service category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "icon": { "type": "string" },
+        "description": { "type": "string" },
+        "sortOrder": { "type": "integer" }
+      },
+      "required": ["name", "slug", "icon"]
+    },
+    "review": {
+      "title": "Review",
+      "description": "User review for a provider",
+      "type": "object",
+      "properties": {
+        "providerId": { "type": "string" },
+        "reviewerPhone": { "type": "string", "description": "Hashed phone" },
+        "rating": { "type": "integer" },
+        "comment": { "type": "string" },
+        "verifiedContact": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["providerId", "rating", "comment"]
+    },
+    "priceReport": {
+      "title": "Price Report",
+      "description": "Crowdsourced price report",
+      "type": "object",
+      "properties": {
+        "categoryId": { "type": "string" },
+        "county": { "type": "string" },
+        "town": { "type": "string" },
+        "reportedPrice": { "type": "integer" },
+        "reportedByPhone": { "type": "string", "description": "Hashed phone" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["categoryId", "county", "reportedPrice"]
+    },
+    "lead": {
+      "title": "Lead",
+      "description": "Contact lead for a provider",
+      "type": "object",
+      "properties": {
+        "providerId": { "type": "string" },
+        "contactMethod": { "type": "string", "enum": ["whatsapp", "call", "form"] },
+        "userPhone": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["providerId", "contactMethod"]
+    }
+  },
+  "firestore": {
+    "/providers/{providerId}": { "schema": "provider", "description": "Service provider listings" },
+    "/categories/{categoryId}": { "schema": "category", "description": "Service categories" },
+    "/reviews/{reviewId}": { "schema": "review", "description": "Provider reviews" },
+    "/price_reports/{reportId}": { "schema": "priceReport", "description": "Crowdsourced price reports" },
+    "/leads/{leadId}": { "schema": "lead", "description": "Contact leads" }
+  }
+}

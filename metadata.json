@@ -1,0 +1,7 @@
+{
+  "name": "CheapPlug Kenya",
+  "description": "A high-converting platform to find the cheapest and most reliable service providers in Kenya, solving overcharging with price transparency.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
